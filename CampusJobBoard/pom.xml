@@ -71,6 +71,19 @@
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <!-- Jakarta Validation API (required for the annotations) -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.1.0</version>   <!-- or latest 3.x version -->
+        </dependency>
+
+        <!-- Hibernate Validator (the actual engine that performs validation) -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.3.Final</version>   <!-- or latest 8.x -->
+        </dependency>
 	</dependencies>
 
 	<build>
