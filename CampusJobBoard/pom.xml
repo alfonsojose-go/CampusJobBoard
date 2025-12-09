@@ -84,6 +84,16 @@
             <artifactId>hibernate-validator</artifactId>
             <version>8.0.3.Final</version>   <!-- or latest 8.x -->
         </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 	</dependencies>
 
 	<build>
