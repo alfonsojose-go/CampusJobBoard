@@ -2,6 +2,7 @@ package com.example.CampusJobBoard.Controllers;
 
 
 import com.example.CampusJobBoard.Models.Job;
+import com.example.CampusJobBoard.Models.User;
 import com.example.CampusJobBoard.Repositories.JobRepo;
 import com.example.CampusJobBoard.Services.JobService;
 import org.springframework.stereotype.Controller;
@@ -25,11 +26,6 @@ public class JobController {
     }
 
 
-    @GetMapping("/test")
-    public String test() {
-        return "This is a test!";  // Direct string response
-    }
-
     @GetMapping
     public String listJobs(Model model){
         model.addAttribute("jobs", jobService.findAll());
@@ -47,8 +43,40 @@ public class JobController {
         if (result.hasErrors()){
             return "job-form";
         }
+        // Fetch the User entity with ID=1 (the employer)
+        // update this after Adarsh's code
+//        User employer = userRepository.findById(1L)
+//                .orElseThrow(() -> new RuntimeException("User (employer) not found with ID: 1"));
+
+
+        //use this code for now
+        User tempEmployer = new User();
+        tempEmployer.setUserId(1L);
+
+        // Set the employer (User entity)
+        job.setEmployer(tempEmployer);
+
+        // Set status
+        job.setStatus(Job.JobStatus.PENDING);
+
         jobService.save(job);
         return "redirect:/job";
 
+    }
+
+    // DELETE ITEM
+    @GetMapping("/delete/{jobId}")
+    public String deleteJob(@PathVariable Long jobId) {
+        jobService.deleteById(jobId);
+        return "redirect:/job";
+    }
+
+    // UPDATE ITEM
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
+        Job job = jobService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Job not found"));
+        model.addAttribute("jobs", job);
+        return "job-form"; // Same template!
     }
 }
