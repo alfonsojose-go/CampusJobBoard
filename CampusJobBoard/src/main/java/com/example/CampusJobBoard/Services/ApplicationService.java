@@ -26,7 +26,7 @@ public class ApplicationService {
     }
 
     // -------------------------------------------------
-    // Apply to a job (simple version, no custom exceptions)
+    // APPLY TO A JOB  (this is where your method goes)
     // -------------------------------------------------
     public void applyToJob(Long jobId, String studentEmail) {
 
@@ -39,7 +39,7 @@ public class ApplicationService {
                 .orElseThrow(() -> new RuntimeException("Job not found"));
 
         // Prevent duplicate applications
-        boolean exists = applicationRepo.existsByJobJobIdAndStudentUserId(
+        boolean exists = applicationRepo.existsByJob_JobIdAndStudent_UserId(
                 jobId, student.getUserId());
 
         if (exists) {
@@ -50,7 +50,7 @@ public class ApplicationService {
         JobApplication application = new JobApplication();
         application.setJob(job);
         application.setStudent(student);
-        application.setStatus("SUBMITTED");
+        application.setStatus(JobApplication.ApplicationStatus.valueOf("SUBMITTED"));
 
         // Save
         applicationRepo.save(application);

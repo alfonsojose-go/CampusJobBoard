@@ -28,16 +28,21 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    @GetMapping({"", "/"})
+    public String studentHome() {
+        return "redirect:/student/jobs";
+    }
+
     @GetMapping("/jobs")
     public String viewApprovedJobs(Model model) {
         model.addAttribute("jobs", jobService.getApprovedJobs());
-        return "student/job-list-student";
+        return "job-list-student";
     }
 
     @GetMapping("/jobs/{id}")
     public String jobDetails(@PathVariable Long id, Model model) {
         model.addAttribute("job", jobService.getJobById(id));
-        return "student/job-details-student";
+        return "job-details-student";
     }
 
     @PostMapping("/jobs/{id}/apply")
@@ -49,6 +54,6 @@ public class StudentController {
     @GetMapping("/applications")
     public String myApps(Model model, Principal principal) {
         model.addAttribute("apps", studentService.getMyApplications(principal.getName()));
-        return "student/my-applications";
+        return "my-applications";
     }
 }
