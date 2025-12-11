@@ -26,6 +26,6 @@ public class StudentService {
         User student = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 
-        return applicationRepo.findByStudentUserId(student.getUserId());
+        return applicationRepo.findByStudent_UserId(student.getUserId());
     }
 }

@@ -4,7 +4,8 @@ import com.example.CampusJobBoard.Models.Job;
 import com.example.CampusJobBoard.Models.JobApplication;
 import com.example.CampusJobBoard.Models.User;
 import com.example.CampusJobBoard.Repositories.JobApplicationRepo;
-
+import com.example.CampusJobBoard.Repositories.JobRepo;
+import com.example.CampusJobBoard.Repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,48 +13,46 @@ import org.springframework.stereotype.Service;
 public class ApplicationService {
 
     private final JobApplicationRepo applicationRepo;
-    private final JobRepo jobRepository;
-    private final UserRepo userRepository;
+    private final JobRepo jobRepo;
+    private final UserRepo userRepo;
 
     @Autowired
     public ApplicationService(JobApplicationRepo applicationRepo,
-                              JobRepo jobRepository,
-                              UserRepo userRepository) {
+                              JobRepo jobRepo,
+                              UserRepo userRepo) {
         this.applicationRepo = applicationRepo;
-        this.jobRepository = jobRepository;
-        this.userRepository = userRepository;
+        this.jobRepo = jobRepo;
+        this.userRepo = userRepo;
     }
 
-    // =======================================
-    // APPLY TO JOB (Student functionality)
-    // =======================================
+    // -------------------------------------------------
+    // Apply to a job (simple version, no custom exceptions)
+    // -------------------------------------------------
     public void applyToJob(Long jobId, String studentEmail) {
 
-        // 1. Find student from email (Principal)
-        User student = userRepository.findByEmail(studentEmail)
+        // Find the student
+        User student = userRepo.findByEmail(studentEmail)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 
-        // 2. Validate job exists
-        Job job = jobRepository.findById(jobId)
+        // Find the job
+        Job job = jobRepo.findById(jobId)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
 
-        // 3. Check if student already applied (duplicate prevention)
-        boolean alreadyApplied =
-                applicationRepo.existsByJobJobIdAndStudentUserId(jobId, student.getUserId());
+        // Prevent duplicate applications
+        boolean exists = applicationRepo.existsByJobJobIdAndStudentUserId(
+                jobId, student.getUserId());
 
-        if (alreadyApplied) {
-            throw new RuntimeException("You have already applied to this job.");
+        if (exists) {
+            throw new RuntimeException("You already applied to this job");
         }
 
-        // 4. Create a new JobApplication entity
+        // Create application
         JobApplication application = new JobApplication();
         application.setJob(job);
         application.setStudent(student);
+        application.setStatus("SUBMITTED");
 
-        // IMPORTANT: Use the ENUM, not a String
-        application.setStatus(JobApplication.ApplicationStatus.SUBMITTED);
-
-        // 5. Save new application
+        // Save
         applicationRepo.save(application);
     }
 }
