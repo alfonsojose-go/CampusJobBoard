@@ -1,0 +1,41 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5" style="max-width: 420px;">
+    <div class="card shadow-sm">
+        <div class="card-body p-4">
+            <h3 class="mb-3">Login</h3>
+
+            <div th:if="${param.registered}" class="alert alert-success">Registered! Please login.</div>
+            <div th:if="${param.error}" class="alert alert-danger">Invalid email or password.</div>
+            <div th:if="${param.logout}" class="alert alert-info">Logged out successfully.</div>
+
+            <form th:action="@{/login}" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input class="form-control" name="email" type="email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input class="form-control" name="password" type="password" required>
+                </div>
+
+                <button class="btn btn-primary w-100" type="submit">Login</button>
+
+                <div class="text-center mt-3">
+                    <a th:href="@{/register}">Create account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

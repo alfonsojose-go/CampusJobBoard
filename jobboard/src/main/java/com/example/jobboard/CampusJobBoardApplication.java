@@ -1,4 +1,4 @@
-package com.example.CampusJobBoard;
+package com.example.jobboard;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
