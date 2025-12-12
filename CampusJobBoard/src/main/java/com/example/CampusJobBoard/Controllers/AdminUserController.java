@@ -22,6 +22,7 @@ public class AdminUserController {
     }
 
 
+
     @GetMapping("/users")
     public String reviewJobs(Model model){
         model.addAttribute("users", service.findAll());
