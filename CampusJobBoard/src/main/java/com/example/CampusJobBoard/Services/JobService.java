@@ -11,6 +11,10 @@ public interface JobService {
 
     Job save(Job job);
 
+    Job getJobById(Long id);          // ← NEW
+
+    List<Job> getApprovedJobs();
+
     void deleteById(Long id);
 
 }
