@@ -30,12 +30,6 @@
 
             <p class="card-text" th:text="${job.description}"></p>
 
-            <p class="text-muted">
-                <strong>Employer:</strong>
-                <!-- FIXED: Now uses real field from User entity -->
-                <span th:text="${job.employer.fullName}">Unknown</span>
-            </p>
-
             <a th:href="@{'/student/jobs/' + ${job.jobId}}"
                class="btn btn-primary">
                 View Details

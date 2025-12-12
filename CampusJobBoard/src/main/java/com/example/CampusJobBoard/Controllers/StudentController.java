@@ -33,7 +33,7 @@ public class StudentController {
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
 
-        String email = "student@test.com"; // temporary
+        String email = "charlie@example.com"; // temporary
 
         model.addAttribute("studentName", "Student User");
         model.addAttribute("totalJobs", jobService.getApprovedJobs().size());
@@ -57,7 +57,7 @@ public class StudentController {
     @PostMapping("/jobs/{id}/apply")
     public String apply(@PathVariable("id") Long id) {
 
-        String email = "student@test.com"; // temporary
+        String email = "charlie@example.com"; // temporary
 
         applicationService.applyToJob(id, email);
 
@@ -67,7 +67,7 @@ public class StudentController {
     @GetMapping("/applications")
     public String myApps(Model model) {
 
-        String email = "student@test.com";
+        String email = "charlie@example.com";
 
         model.addAttribute("apps", studentService.getMyApplications(email));
 

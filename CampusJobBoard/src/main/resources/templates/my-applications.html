@@ -27,7 +27,7 @@
         <thead class="table-dark">
         <tr>
             <th>Job Title</th>
-            <th>Employer</th>
+            <th>Description</th>
             <th>Status</th>
             <th>Applied Date</th>
         </tr>
@@ -35,15 +35,15 @@
 
         <tbody>
         <tr th:each="app : ${apps}">
-            <td th:text="${app.job.title}">Job Title</td>
+            <td th:text="${app.job.title}"></td>
 
             <!-- FIXED: correct field -->
-            <td th:text="${app.job.employer.fullName}">Employer</td>
+            <td th:text="${app.job.description}"></td>
 
-            <td th:text="${app.status}">Submitted</td>
+            <td th:text="${app.status}"></td>
 
             <td th:text="${#temporals.format(app.appliedAt, 'yyyy-MM-dd HH:mm')}">
-                2025-01-01
+
             </td>
         </tr>
         </tbody>
