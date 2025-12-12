@@ -30,6 +30,7 @@ public class ApplicationService {
     // -------------------------------------------------
     public void applyToJob(Long jobId, String studentEmail) {
 
+
         // Find the student
         User student = userRepo.findByEmail(studentEmail)
                 .orElseThrow(() -> new RuntimeException("Student not found"));

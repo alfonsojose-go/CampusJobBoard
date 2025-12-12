@@ -36,9 +36,9 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<Job> getApprovedJobs() {
+        // Call the String-based finder
         return jobRepo.findByStatus(Job.JobStatus.APPROVED);
     }
-
 
     @Override
     public Job save(Job job) {

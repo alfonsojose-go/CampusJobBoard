@@ -10,6 +10,11 @@
 
 <div class="container mt-5">
 
+    <!-- Return to Dashboard -->
+    <a href="/student/dashboard" class="btn btn-outline-secondary mb-3">
+        ← Return to Dashboard
+    </a>
+
     <h2 class="mb-4">Approved Job Listings</h2>
 
     <!-- No jobs -->
@@ -20,18 +25,22 @@
     <!-- Job list -->
     <div th:each="job : ${jobs}" class="card mb-3 shadow-sm">
         <div class="card-body">
+
             <h4 th:text="${job.title}" class="card-title"></h4>
+
             <p class="card-text" th:text="${job.description}"></p>
 
             <p class="text-muted">
                 <strong>Employer:</strong>
-                <span th:text="${job.employerName}">Unknown</span>
+                <!-- FIXED: Now uses real field from User entity -->
+                <span th:text="${job.employer.fullName}">Unknown</span>
             </p>
 
             <a th:href="@{'/student/jobs/' + ${job.jobId}}"
                class="btn btn-primary">
                 View Details
             </a>
+
         </div>
     </div>
 

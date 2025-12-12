@@ -10,16 +10,17 @@
 
 <div class="container mt-5">
 
-    <a href="/student/jobs" class="btn btn-secondary mb-3">← Back to Jobs</a>
+    <!-- Return to Dashboard -->
+    <a href="/student/dashboard" class="btn btn-outline-secondary mb-3">← Return to Dashboard</a>
+
+    <!-- Back to Jobs -->
+    <a href="/student/jobs" class="btn btn-secondary mb-3 ms-2">← Back to Jobs</a>
 
     <div class="card shadow">
         <div class="card-body">
 
             <h2 class="card-title" th:text="${job.title}">Job Title</h2>
 
-            <h5 class="text-muted mb-3">
-                Employer: <span th:text="${job.employerName}">Employer</span>
-            </h5>
 
             <p class="card-text" th:text="${job.description}">
                 Job description goes here.
