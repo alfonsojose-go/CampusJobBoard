@@ -1,4 +1,5 @@
-package com.example.CampusJobBoard.Services;
+import com.example.CampusJobBoard.Services.JobServiceImpl;
+
 
 import com.example.CampusJobBoard.Models.Job;
 import com.example.CampusJobBoard.Models.User;
@@ -52,7 +53,7 @@ class JobServiceImplTest {
         job.setCategory("housekeeping");
         job.setLocation("Red Deer");
         job.setSalary(BigDecimal.valueOf(15.0));
-        job.setStatus(Job.JobStatus.valueOf("PENDING"));
+        job.setStatus(Job.JobStatus.PENDING);
         job.setEmployer(tempEmployer);
         return job;
     }
@@ -106,7 +107,8 @@ class JobServiceImplTest {
         Job inputJob = buildItem(null, "Janitor");
         Job savedJob = buildItem(1L, "Janitor");
 
-        when(jobRepo.save(inputJob)).thenReturn(savedJob);
+        when(jobRepo.save(any(Job.class))).thenReturn(savedJob);
+
 
         // When
         Job result = service.save(inputJob);
