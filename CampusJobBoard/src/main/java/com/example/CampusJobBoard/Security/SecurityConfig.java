@@ -60,12 +60,14 @@ public class SecurityConfig {
                             .anyMatch(a -> a.getAuthority().equals("ROLE_EMPLOYER"));
                     boolean isStudent = authentication.getAuthorities().stream()
                             .anyMatch(a -> a.getAuthority().equals("ROLE_STUDENT"));
+                    boolean isAdmin = authentication.getAuthorities().stream()
+                            .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
 
                     if (isEmployer) {
                         response.sendRedirect("/job");
                     } else if (isStudent) {
                         response.sendRedirect("/student");
-                    } else {
+                    } else if (isAdmin){
                         response.sendRedirect("/admin/job-review");
                     }
                 })
