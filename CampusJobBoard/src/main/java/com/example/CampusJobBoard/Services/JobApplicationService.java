@@ -2,6 +2,7 @@ package com.example.CampusJobBoard.Services;
 
 import com.example.CampusJobBoard.Models.Job;
 import com.example.CampusJobBoard.Models.JobApplication;
+import com.example.CampusJobBoard.Models.User;
 import com.example.CampusJobBoard.Repositories.JobApplicationRepo;
 import com.example.CampusJobBoard.Repositories.JobRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public class JobApplicationService {
 
     public List<JobApplication> getJobsWithSubmittedApplications(){
         return jobApplicationRepo.findByStatus(JobApplication.ApplicationStatus.SUBMITTED);
+    }
+
+    public List<JobApplication> getApplicationsForEmployer(User employer) {
+        return jobApplicationRepo.findByJobEmployer(employer);
     }
 
 

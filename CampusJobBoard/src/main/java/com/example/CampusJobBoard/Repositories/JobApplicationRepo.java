@@ -1,6 +1,7 @@
 package com.example.CampusJobBoard.Repositories;
 
 import com.example.CampusJobBoard.Models.JobApplication;
+import com.example.CampusJobBoard.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,8 @@ public interface JobApplicationRepo extends JpaRepository<JobApplication, Long> 
     List<JobApplication> findByStatus(JobApplication.ApplicationStatus status);
 
     void deleteByApplicationId(Long id);
+
+    List<JobApplication> findByJobEmployer(User employer);
 }
 
 

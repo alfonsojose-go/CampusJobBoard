@@ -1,6 +1,8 @@
 package com.example.CampusJobBoard.Services;
 
 import com.example.CampusJobBoard.Models.Job;
+import com.example.CampusJobBoard.Models.User;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +18,8 @@ public interface JobService {
     List<Job> getApprovedJobs();
 
     void deleteById(Long id);
+
+    public List<Job> findByEmployer(User employer);
 
 
 }
