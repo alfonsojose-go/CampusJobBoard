@@ -1,6 +1,7 @@
 package com.example.CampusJobBoard.Services;
 
 import com.example.CampusJobBoard.Models.Job;
+import com.example.CampusJobBoard.Models.User;
 import com.example.CampusJobBoard.Repositories.JobApplicationRepo;
 import com.example.CampusJobBoard.Repositories.JobRepo;
 import jakarta.transaction.Transactional;
@@ -58,5 +59,10 @@ public class JobServiceImpl implements JobService {
 
         jobApplicationRepo.deleteById(id);
         jobRepo.deleteById(id);
+    }
+
+    @Override
+    public List<Job> findByEmployer(User employer) {
+        return jobRepo.findByEmployer(employer);
     }
 }
