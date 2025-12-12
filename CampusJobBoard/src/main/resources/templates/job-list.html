@@ -8,6 +8,22 @@
     <script th:src="@{/js/delete-confirm.js}" defer></script>
 </head>
 <body>
+<header>
+    <div class="container mt-4">
+        <nav class="nav">
+            <a th:href="@{/job}"
+               class="nav-link">
+                Job Postings
+            </a>
+            <a th:href="@{/job/job-applications}"
+               class="nav-link"
+            >
+                Job Applications
+            </a>
+        </nav>
+    </div>
+
+</header>
 <div class="container mt-4">
     <div class="card shadow-sm">
         <div class="card-header d-flex justify-content-between align-items-center">
