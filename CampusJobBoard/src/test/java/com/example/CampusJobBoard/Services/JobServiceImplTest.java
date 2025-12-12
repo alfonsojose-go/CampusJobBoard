@@ -1,4 +1,5 @@
-package com.example.CampusJobBoard.Services;
+import com.example.CampusJobBoard.Services.JobServiceImpl;
+
 
 import com.example.CampusJobBoard.Models.Job;
 import com.example.CampusJobBoard.Models.User;
@@ -25,7 +26,7 @@ class JobServiceImplTest {
     private JobRepo jobRepo;
 
     @InjectMocks
-    private JobService service; // The class containing your save method
+    private JobServiceImpl service; // The class containing your save method
 
     // ---------------------------------------------
     // Helper method to generate a valid LostItem
@@ -40,7 +41,11 @@ class JobServiceImplTest {
         job.setLocation("Red Deer");
         job.setSalary(BigDecimal.valueOf(15.0));
         job.setStatus(Job.JobStatus.valueOf("APPROVED"));
-        job.setEmployer(id);
+
+        User employer = new User();
+        employer.setUserId(id != null ? id : 1L); // dummy employer for test
+        job.setEmployer(employer);
+
         return job;
     }
 
@@ -52,7 +57,8 @@ class JobServiceImplTest {
         Job inputJob = buildItem(null, "Janitor");
         Job savedJob = buildItem(1L, "Janitor");
 
-        when(jobRepo.save(inputJob)).thenReturn(savedJob);
+        when(jobRepo.save(any(Job.class))).thenReturn(savedJob);
+
 
         // When
         Job result = service.save(inputJob);
@@ -61,7 +67,8 @@ class JobServiceImplTest {
         assertThat(result).isNotNull();
         assertThat(result.getJobId()).isEqualTo(1L);
         assertThat(result.getTitle()).isEqualTo("Janitor");
-        assertThat(result.getStatus()).isEqualTo("APPROVED");
+        assertThat(result.getStatus()).isEqualTo(Job.JobStatus.APPROVED);
+
 
         verify(jobRepo, times(1)).save(inputJob);
     }
