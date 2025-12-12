@@ -31,7 +31,7 @@ public class AdminUserController {
 
     //APPROVE ITEM
     @GetMapping("/activate/{jobId}")
-    public String approveJob(@PathVariable Long jobId) {
+    public String approveJob(@PathVariable("jobId") Long jobId) {
         User user = service.findById(jobId)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
 
@@ -43,7 +43,7 @@ public class AdminUserController {
 
     //REJECT ITEM
     @GetMapping("/deactivate/{jobId}")
-    public String rejectJob(@PathVariable Long jobId) {
+    public String rejectJob(@PathVariable("jobId") Long jobId) {
         User user = service.findById(jobId)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
 

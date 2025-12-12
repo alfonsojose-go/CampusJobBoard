@@ -29,7 +29,7 @@ public class AdminJobController {
 
     //APPROVE ITEM
     @GetMapping("/approve/{jobId}")
-    public String approveJob(@PathVariable Long jobId) {
+    public String approveJob(@PathVariable("jobId") Long jobId) {
         Job job = jobService.findById(jobId)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
 
@@ -41,7 +41,7 @@ public class AdminJobController {
 
     //APPROVE ITEM
     @GetMapping("/reject/{jobId}")
-    public String rejectJob(@PathVariable Long jobId) {
+    public String rejectJob(@PathVariable("jobId") Long jobId) {
         Job job = jobService.findById(jobId)
                 .orElseThrow(() -> new RuntimeException("Job not found"));
 

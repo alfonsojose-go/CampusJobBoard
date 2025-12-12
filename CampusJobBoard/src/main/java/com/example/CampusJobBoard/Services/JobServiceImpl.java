@@ -1,7 +1,10 @@
 package com.example.CampusJobBoard.Services;
 
 import com.example.CampusJobBoard.Models.Job;
+import com.example.CampusJobBoard.Repositories.JobApplicationRepo;
 import com.example.CampusJobBoard.Repositories.JobRepo;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -12,10 +15,14 @@ import java.util.Optional;
 @Service
 public class JobServiceImpl implements JobService {
 
+    @Autowired
     private final JobRepo jobRepo;
 
-    public JobServiceImpl(JobRepo jobRepo) {
+    private final JobApplicationRepo jobApplicationRepo;
+
+    public JobServiceImpl(JobRepo jobRepo, JobApplicationRepo jobApplicationRepo) {
         this.jobRepo = jobRepo;
+        this.jobApplicationRepo = jobApplicationRepo;
     }
 
     @Override
@@ -46,7 +53,10 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
+
+        jobApplicationRepo.deleteById(id);
         jobRepo.deleteById(id);
     }
 }
