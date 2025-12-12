@@ -41,7 +41,8 @@ public class SecurityConfig {
 
                 // role protected pages
                 .requestMatchers("/student/**").hasRole("STUDENT")
-                .requestMatchers("/employer/**").hasRole("EMPLOYER")
+                .requestMatchers("/job/**").hasRole("EMPLOYER")
+                .requestMatchers("/admin/**").hasRole("ADMIN")
 
                 // everything else requires login
                 .anyRequest().authenticated()
@@ -61,11 +62,11 @@ public class SecurityConfig {
                             .anyMatch(a -> a.getAuthority().equals("ROLE_STUDENT"));
 
                     if (isEmployer) {
-                        response.sendRedirect("/employer/home");
+                        response.sendRedirect("/job");
                     } else if (isStudent) {
-                        response.sendRedirect("/student/home");
+                        response.sendRedirect("/student");
                     } else {
-                        response.sendRedirect("/home");
+                        response.sendRedirect("/admin/job-review");
                     }
                 })
 
