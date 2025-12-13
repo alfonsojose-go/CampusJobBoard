@@ -27,6 +27,7 @@
         <thead class="table-dark">
         <tr>
             <th>Job Title</th>
+            <th>Employer Name</th>
             <th>Description</th>
             <th>Status</th>
             <th>Applied Date</th>
@@ -36,6 +37,8 @@
         <tbody>
         <tr th:each="app : ${apps}">
             <td th:text="${app.job.title}"></td>
+
+            <td th:text="${app.job.employer.fullName}"></td>
 
             <!-- FIXED: correct field -->
             <td th:text="${app.job.description}"></td>

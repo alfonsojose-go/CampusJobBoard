@@ -21,6 +21,10 @@
 
             <h2 class="card-title" th:text="${job.title}">Job Title</h2>
 
+            <h5 class="text-muted mb-3">
+                Employer: <span th:text="${job.employer.fullName}">Employer</span>
+            </h5>
+
 
             <p class="card-text" th:text="${job.description}">
                 Job description goes here.
@@ -36,6 +40,23 @@
                     Apply for this Job
                 </button>
             </form>
+
+            <!-- If NOT applied -->
+            <form th:if="${!alreadyApplied}"
+                  th:action="@{'/student/jobs/' + ${job.jobId} + '/apply'}"
+                  method="post">
+
+                <button type="submit" class="btn btn-success">
+                    Apply for this Job
+                </button>
+            </form>
+
+            <!-- If already applied -->
+            <button th:if="${alreadyApplied}"
+                    class="btn btn-secondary"
+                    disabled>
+                You have already applied
+            </button>
 
         </div>
     </div>
