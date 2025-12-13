@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="header">
+
+    <nav class="navbar navbar-light bg-light shadow-sm px-4">
+        <div class="container-fluid d-flex">
+
+            <!-- Logout aligned RIGHT -->
+            <form th:action="@{/logout}" method="post" class="ms-auto mb-0">
+                <button type="submit" class="btn btn-danger">
+                    Logout
+                </button>
+            </form>
+
+        </div>
+    </nav>
+
+</div>
+
+</body>
+</html>
