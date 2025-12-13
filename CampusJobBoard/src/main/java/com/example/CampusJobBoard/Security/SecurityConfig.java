@@ -66,7 +66,7 @@ public class SecurityConfig {
                     if (isEmployer) {
                         response.sendRedirect("/job");
                     } else if (isStudent) {
-                        response.sendRedirect("/student");
+                        response.sendRedirect("/student/dashboard");
                     } else if (isAdmin){
                         response.sendRedirect("/admin/job-review");
                     }

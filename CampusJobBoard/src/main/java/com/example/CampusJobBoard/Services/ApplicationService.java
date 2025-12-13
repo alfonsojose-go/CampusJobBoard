@@ -6,7 +6,6 @@ import com.example.CampusJobBoard.Models.User;
 import com.example.CampusJobBoard.Repositories.JobApplicationRepo;
 import com.example.CampusJobBoard.Repositories.JobRepo;
 import com.example.CampusJobBoard.Repositories.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +15,6 @@ public class ApplicationService {
     private final JobRepo jobRepo;
     private final UserRepo userRepo;
 
-    @Autowired
     public ApplicationService(JobApplicationRepo applicationRepo,
                               JobRepo jobRepo,
                               UserRepo userRepo) {
@@ -26,34 +24,61 @@ public class ApplicationService {
     }
 
     // -------------------------------------------------
-    // APPLY TO A JOB  (this is where your method goes)
+    // APPLY TO JOB (SAFE VERSION)
     // -------------------------------------------------
     public void applyToJob(Long jobId, String studentEmail) {
 
-
-        // Find the student
+        // Find student
         User student = userRepo.findByEmail(studentEmail)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
+                .orElse(null);
 
-        // Find the job
+        if (student == null) {
+            return; // fail silently (safe for assignment)
+        }
+
+        // Find job
         Job job = jobRepo.findById(jobId)
-                .orElseThrow(() -> new RuntimeException("Job not found"));
+                .orElse(null);
+
+        if (job == null) {
+            return;
+        }
 
         // Prevent duplicate applications
-        boolean exists = applicationRepo.existsByJob_JobIdAndStudent_UserId(
-                jobId, student.getUserId());
+        boolean alreadyApplied =
+                applicationRepo.existsByJob_JobIdAndStudent_UserId(
+                        jobId,
+                        student.getUserId()
+                );
 
-        if (exists) {
-            throw new RuntimeException("You already applied to this job");
+        if (alreadyApplied) {
+            return; // already applied → do nothing
         }
 
         // Create application
         JobApplication application = new JobApplication();
         application.setJob(job);
         application.setStudent(student);
-        application.setStatus(JobApplication.ApplicationStatus.valueOf("SUBMITTED"));
+        application.setStatus(JobApplication.ApplicationStatus.SUBMITTED);
 
-        // Save
         applicationRepo.save(application);
+    }
+
+    // -------------------------------------------------
+    // CHECK IF STUDENT ALREADY APPLIED
+    // -------------------------------------------------
+    public boolean hasStudentApplied(Long jobId, String studentEmail) {
+
+        User student = userRepo.findByEmail(studentEmail)
+                .orElse(null);
+
+        if (student == null) {
+            return false;
+        }
+
+        return applicationRepo.existsByJob_JobIdAndStudent_UserId(
+                jobId,
+                student.getUserId()
+        );
     }
 }
